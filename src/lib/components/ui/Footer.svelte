@@ -1,101 +1,227 @@
 <script lang="ts">
-    // Svelte 5 Props
-    let { creator = "Khwarizmi" } = $props();
-    const year = new Date().getFullYear();
+  import { Github, Twitter, Linkedin, Heart } from 'lucide-svelte';
+  import { onMount } from 'svelte';
 
-    const socialPlatforms = [
-        { name: "GitHub", icon: "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" },
-        { name: "Twitter", icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" },
-        { name: "Email", icon: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" }
-    ];
+  let mounted = $state(false);
+  const currentYear = new Date().getFullYear();
+
+  onMount(() => {
+    setTimeout(() => {
+        mounted = true;
+    }, 100);
+  });
+
+  const footerLinks = {
+    product: ['Features', 'Pricing', 'Integrations', 'Changelog'],
+    company: ['About Us', 'Careers', 'Blog', 'Contact'],
+    legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy']
+  };
+
+  const socialLinks = [
+    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Linkedin, href: '#', label: 'LinkedIn' }
+  ];
 </script>
 
 <svelte:head>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<footer class="relative mt-20 w-full bg-[#1A2E29] border-t-8 border-[#41B78E] overflow-hidden text-[#E0F2F1] group/footer pb-10">
+<footer class="relative mt-40 w-full font-pixel overflow-hidden text-[#FFE4C4] select-none">
+  
+  <div class="absolute inset-0 h-64 bg-linear-to-b from-[#87CEEB] via-[#F9BA72] to-[#FFD700] z-0 pointer-events-none overflow-hidden">
+      <div class="absolute top-10 right-20 w-16 h-16 bg-[#F9BA72] border-4 border-[#FFD700] shadow-[4px_4px_0_0_#FF4500] animate-pulse-slow"></div>
+      <div class="absolute top-20 left-0 w-32 h-12 bg-white opacity-80 animate-cloud-drift-slow delay-0"></div>
+      <div class="absolute top-5 right-1/3 w-24 h-8 bg-white opacity-60 animate-cloud-drift-fast delay-1000"></div>
+  </div>
+
+  <div class="absolute top-32 inset-x-0 h-32 z-10 pointer-events-none">
+      {#each Array(6) as _, i}
+        <div class="absolute bottom-0 w-0 h-0 
+                    border-l-60 border-r-60 border-b-100 
+                    border-l-transparent border-r-transparent border-b-[#4A6741]"
+             style="left: {i * 15}%; transform: scale({1 + i%2 * 0.3}); z-index: {i};">
+             <div class="absolute -left-5 -top-7.5 w-0 h-0 
+                         border-l-20 border-r-20 border-b-30
+                         border-l-transparent border-r-transparent border-b-white"></div>
+        </div>
+      {/each}
+  </div>
+  
+  <div class="relative z-20 bg-[#5D4037] border-t-8 border-[#2E7D32] pt-16 pb-8 
+              before:content-[''] before:absolute before:-top-2 before:left-0 before:w-full before:h-2 before:bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAFklEQVQYV2NkYGD4z4AHYGNgYCQHAQCIYwH5S8XJ8wAAAABJRU5ErkJggg==')] before:opacity-50">
     
-    <div class="absolute inset-0 opacity-10 pointer-events-none" 
-         style="background-image: linear-gradient(#41B78E 2px, transparent 2px), linear-gradient(90deg, #41B78E 2px, transparent 2px); background-size: 40px 40px;">
-    </div>
-
-    <div class="bg-[#41B78E] py-2 border-b-4 border-black/30 shadow-lg overflow-hidden relative z-10">
-        <div class="animate-marquee whitespace-nowrap flex gap-16 items-center">
-            {#each Array(10) as _}
-                <span class="text-white font-['VT323'] text-xl uppercase tracking-[0.2em] font-bold">
-                    Start Your Adventure <span class="text-[#F9BA72] mx-2 text-2xl">•</span> Crafted with Pixels <span class="text-[#F9BA72] mx-2 text-2xl">•</span>
-                </span>
-            {/each}
+    <div class="absolute -top-10 left-0 animate-walk-across pointer-events-none">
+        <div class="w-8 h-12 bg-red-500 border-2 border-black relative">
+            <div class="absolute top-1 left-1 w-2 h-2 bg-white"></div>
+            <div class="absolute bottom-0 left-1 w-2 h-3 bg-blue-700 animate-leg-walk"></div>
+            <div class="absolute bottom-0 right-1 w-2 h-3 bg-blue-700 animate-leg-walk delay-150"></div>
         </div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-16 flex flex-col items-center text-center">
-        
-        <div class="mb-10 relative group cursor-default">
+    <div class="max-w-7xl mx-auto px-6 relative z-30" class:opacity-0={!mounted} class:animate-fade-in-up={mounted}>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          
+          <div class="col-span-1 md:col-span-2 space-y-6">
             
-            <div class="absolute -left-16 top-1/2 -translate-x-1/2 w-12 h-8 bg-white/10 hidden md:block animate-pulse"></div>
-            <div class="absolute -right-16 top-1/2 -translate-x-1/2 w-12 h-8 bg-white/10 hidden md:block animate-pulse" style="animation-delay: 1s"></div>
+            <button class="group relative inline-block bg-[#8D6E63] border-4 border-[#3E2723] p-4 
+                           shadow-[8px_8px_0_0_#2E7D32] 
+                           hover:shadow-none hover:translate-x-1.5 hover:translate-y-1.5 
+                           active:scale-95
+                           transition-all duration-150 cursor-pointer outline-none overflow-hidden">
+                
+                <h2 class="text-3xl font-bold uppercase tracking-widest leading-none text-white flex items-center gap-4 relative z-10">
+                  <span class="text-4xl filter drop-shadow-md group-hover:animate-spin-pixel">🍄</span>
+                  
+                  <span class="relative inline-block group-hover:animate-glitch" data-text="Pixel Realm">
+                    Pixel Realm
+                  </span>
+                </h2>
 
-            <h1 class="text-4xl md:text-6xl lg:text-7xl uppercase leading-tight transform transition-transform duration-300 hover:scale-105"
-                style="
-                    font-family: 'Press Start 2P', cursive; 
-                    color: white;
-                    text-shadow: 
-                        4px 4px 0px #41B78E, 
-                        8px 8px 0px #000;
-                ">
-                KHWARIZMI<span class="text-[#F9BA72]">.GA</span>
-            </h1>
+                <div class="absolute top-0 -left-full w-1/2 h-full bg-linear-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] group-hover:animate-shine pointer-events-none"></div>
+            </button>
+
+            <p class="font-bold text-lg leading-relaxed max-w-sm border-l-4 border-[#F9BA72] pl-4 text-[#FFE4C4]">
+              Menjelajahi dunia digital satu blok pada satu waktu. Petualangan menanti!
+            </p>
             
-            <div class="mt-6 inline-block bg-black border-2 border-[#41B78E] px-4 py-1 shadow-[4px_4px_0_0_#41B78E]">
-                <p class="font-['VT323'] text-xl md:text-2xl text-[#F9BA72] tracking-[0.3em] uppercase">
-                    The Digital Studio
-                </p>
-            </div>
-        </div>
-
-        <nav class="flex flex-wrap justify-center gap-4 md:gap-6 mb-12">
-            {#each ['Games', 'About', 'Team', 'Contact'] as item}
-                <a href="#{item.toLowerCase()}" 
-                   class="relative px-6 py-3 bg-[#41B78E] border-4 border-[#2A7A5E] text-white font-['VT323'] text-xl md:text-2xl uppercase tracking-widest transition-all
-                          hover:-translate-y-1 hover:bg-[#F9BA72] hover:text-black hover:border-black hover:shadow-[0_6px_0_0_black] shadow-[0_4px_0_0_#1A2E29]">
-                    {item}
+            <div class="flex gap-4 mt-6">
+              {#each socialLinks as social}
+                {@const Icon = social.icon}
+                <a href={social.href} aria-label={social.label}
+                   class="w-12 h-12 flex items-center justify-center bg-[#8D6E63] border-[3px] border-[#3E2723] 
+                          shadow-[4px_4px_0_0_#2E7D32] text-white
+                          hover:bg-[#F9BA72] hover:shadow-none hover:-translate-y-2 
+                          active:translate-y-1
+                          transition-all duration-150 group">
+                  <Icon size={24} strokeWidth={2.5} />
                 </a>
-            {/each}
-        </nav>
-
-        <div class="w-full border-t-4 border-[#41B78E] pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            
-            <div class="flex items-center gap-3">
-                <div class="w-3 h-3 bg-[#41B78E] animate-ping"></div>
-                <p class="font-['VT323'] text-xl text-[#A7F3D0]">
-                    © {year} {creator}. All rights reserved.
-                </p>
+              {/each}
             </div>
+          </div>
 
-            <div class="flex gap-4">
-                {#each socialPlatforms as platform}
-                    <button 
-                        class="w-10 h-10 bg-white border-2 border-black flex items-center justify-center shadow-[3px_3px_0_0_#41B78E] transition-transform active:translate-y-1 active:shadow-none hover:bg-[#F9BA72] group/icon"
-                        aria-label={platform.name}
-                        title={platform.name}
-                    >
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-black" aria-hidden="true">
-                            <path d={platform.icon} />
-                        </svg>
-                    </button>
+          {#each Object.entries(footerLinks) as [category, links]}
+            <div>
+              <h3 class="font-bold text-white text-xl mb-6 uppercase tracking-widest border-b-4 border-[#F9BA72] inline-block pb-1 shadow-[2px_2px_0_0_#2E7D32]">
+                {category}
+              </h3>
+              <ul class="space-y-3">
+                {#each links as label}
+                  <li>
+                    <!-- svelte-ignore a11y_invalid_attribute -->
+                    <a href="#" class="group flex items-center gap-2 font-bold hover:text-white transition-colors duration-100 text-lg">
+                      <span class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#F9BA72]">➤</span>
+                      <span class="group-hover:animate-pixel-flash">{label}</span>
+                    </a>
+                  </li>
                 {/each}
+              </ul>
             </div>
+          {/each}
         </div>
 
+        <div class="pt-8 border-t-4 border-[#3E2723] flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-bold bg-[#4E342E] -mx-6 px-6 pb-6 shadow-inner">
+          <div class="bg-[#3E2723] text-[#F9BA72] px-4 py-2 border-2 border-[#8D6E63]">
+            <p>© {currentYear} Pixel Realm. Press Start.</p>
+          </div>
+          
+          <div class="flex items-center gap-6 text-[#FFE4C4]">
+            <div class="flex items-center gap-2 bg-[#3E2723] px-3 py-1 border-2 border-[#8D6E63]">
+              <div class="flex gap-1">
+                 {#each Array(5) as _, i}
+                    <div class="w-2 h-3 border border-[#8D6E63] {i < 3 ? 'bg-[#41B78E]' : 'bg-[#3E2723]'}"></div>
+                 {/each}
+              </div>
+              <span class="uppercase tracking-wider text-xs">HP: OK</span>
+            </div>
+
+            <p class="flex items-center gap-1.5 uppercase tracking-wide text-xs">
+              Crafted with <Heart size={16} class="text-red-500 fill-red-500 animate-pulse" />
+            </p>
+          </div>
+        </div>
     </div>
+  </div>
 </footer>
 
 <style>
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    .animate-marquee { animation: marquee 30s linear infinite; }
+  .font-pixel { font-family: 'Pixelify Sans', sans-serif; }
+  .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  
+  @keyframes drift { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
+  .animate-cloud-drift-slow { animation: drift 60s linear infinite; }
+  .animate-cloud-drift-fast { animation: drift 35s linear infinite; }
+
+  @keyframes walkAcross { from { left: -50px; } to { left: 105%; } }
+  .animate-walk-across { animation: walkAcross 20s linear infinite; }
+  
+  @keyframes legWalk { 0%, 100% { height: 12px; } 50% { height: 6px; } }
+  .animate-leg-walk { animation: legWalk 0.3s steps(2) infinite alternate; }
+
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+
+  @keyframes pixelFlash {
+      0%, 100% { color: #FFE4C4; }
+      50% { color: #F9BA72; text-shadow: 2px 2px 0px #000; }
+  }
+  .animate-pixel-flash { animation: pixelFlash 0.2s steps(2) infinite; }
+
+  /* --- BUTTON ANIMATIONS --- */
+  
+  /* 1. Glitch */
+  @keyframes glitchAnim {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+  
+  .animate-glitch::before,
+  .animate-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #8D6E63; /* Match button background */
+  }
+
+  .animate-glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #00ffea;
+    clip-path: inset(20% 0 30% 0);
+    animation: glitchAnim 0.3s infinite linear alternate-reverse;
+  }
+
+  .animate-glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #ff004c;
+    clip-path: inset(50% 0 10% 0);
+    animation: glitchAnim 0.3s infinite linear alternate-reverse;
+  }
+
+  /* 2. Spin Pixel */
+  @keyframes spinPixel {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(90deg); }
+      50% { transform: rotate(180deg); }
+      75% { transform: rotate(270deg); }
+      100% { transform: rotate(360deg); }
+  }
+  .animate-spin-pixel {
+      animation: spinPixel 0.6s steps(4) infinite;
+  }
+
+  /* 3. Shine */
+  @keyframes shine {
+      100% { left: 200%; }
+  }
+  .animate-shine {
+      animation: shine 0.5s;
+  }
 </style>

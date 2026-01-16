@@ -1,185 +1,160 @@
 <script lang="ts">
-    import { fade, scale } from 'svelte/transition';
-    import { onMount, onDestroy } from 'svelte';
+    import { fade } from 'svelte/transition';
 
-    export let game: {
+    interface GameItem {
         id: number;
         title: string;
-        image: string;
-        video?: string;
         desc: string;
         tags: string[];
+        color: string;
+    }
+
+    let { game }: { game: GameItem } = $props();
+    
+    let isHovered = $state(false);
+    let isModalOpen = $state(false);
+
+    const toggleModal = () => {
+        isModalOpen = !isModalOpen;
+        if (typeof document !== 'undefined') {
+            document.body.style.overflow = isModalOpen ? 'hidden' : 'auto';
+        }
     };
-
-    let open = false;
-
-    function close() {
-        open = false;
-    }
-
-    function onKey(e: KeyboardEvent) {
-        if (e.key === 'Escape') close();
-        if (e.key === 'Enter') open = true;
-    }
-
-    onMount(() => window.addEventListener('keydown', onKey));
-    onDestroy(() => window.removeEventListener('keydown', onKey));
 </script>
 
-<!-- ================= CARD ================= -->
-<div
-    role="button"
-    tabindex="0"
-    on:click={() => (open = true)}
-    class="relative w-[220px] md:w-[260px] h-[320px] md:h-[360px]
-           bg-[#f8fafc] border-[4px] border-black
-           rounded-xl overflow-hidden cursor-pointer
-           shadow-[6px_6px_0_0_#000]"
->
-    <!-- IMAGE -->
-    <div class="relative h-[55%] border-b-[4px] border-black overflow-hidden">
-        <img
-            src={game.image}
-            alt={game.title}
-            class="w-full h-full object-cover"
-        />
+<svelte:head>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</svelte:head>
 
-        <!-- CRT overlay -->
-        <div
-            class="pointer-events-none absolute inset-0
-                   bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%)]
-                   bg-[length:100%_4px]"
-        ></div>
-
-        <!-- TAG -->
-        <div class="absolute top-2 left-2 flex flex-wrap gap-1">
-            {#each game.tags.slice(0, 2) as tag}
-                <span
-                    class="text-[8px] font-black uppercase tracking-widest
-                           bg-yellow-400 px-1.5 py-0.5
-                           border-2 border-black
-                           shadow-[2px_2px_0_0_#000]"
-                    style="font-family: 'Silkscreen', cursive;"
-                >
-                    {tag}
-                </span>
-            {/each}
-        </div>
-    </div>
-
-    <!-- CONTENT -->
-    <div class="p-3 flex flex-col gap-2">
-        <h3
-            class="text-sm font-black uppercase leading-tight"
-            style="font-family: 'Silkscreen', cursive;"
-        >
-            {game.title}
-        </h3>
-
-        <p class="text-[10px] text-slate-600 line-clamp-3">
-            {game.desc}
-        </p>
-    </div>
-
-    <!-- STATIC INDICATOR -->
-    <div class="absolute bottom-2 right-2 flex items-center gap-1">
-        <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-        <span
-            class="text-[8px] font-bold tracking-widest text-slate-700"
-            style="font-family: 'Silkscreen', cursive;"
-        >
-            DETAILS
-        </span>
-    </div>
-</div>
-
-<!-- ================= MODAL ================= -->
-{#if open}
-<div
-    class="fixed inset-0 z-[9999] flex items-center justify-center"
-    transition:fade
-    on:click={close}
->
-    <!-- BACKDROP -->
-    <div class="absolute inset-0 bg-black/70"></div>
-
-    <!-- MODAL WINDOW -->
-    <div
-        class="relative w-[92%] max-w-3xl
-               bg-slate-100 border-[6px] border-black
-               rounded-2xl shadow-[14px_14px_0_0_#000]
-               p-4 md:p-6"
-        transition:scale={{ start: 0.9 }}
-        on:click|stopPropagation
+<div class="snap-center shrink-0 w-70 md:w-87.5 py-4 font-pixel" role="presentation">
+    <div 
+        role="button"
+        tabindex="0"
+        onmouseenter={() => isHovered = true}
+        onmouseleave={() => isHovered = false}
+        onclick={toggleModal}
+        onkeydown={(e) => e.key === 'Enter' && toggleModal()}
+        class="group relative bg-white border-[3px] border-black p-2 transition-all duration-300 
+               cursor-pointer outline-none
+               {isHovered ? '-translate-y-2 shadow-[8px_8px_0_0_#F9BA72]' : 'shadow-[6px_6px_0_0_#000]'}"
     >
-        <!-- HEADER -->
-        <div class="flex justify-between items-center mb-4">
-            <h2
-                class="text-xl md:text-2xl font-black uppercase"
-                style="font-family: 'Silkscreen', cursive;"
-            >
-                {game.title}
-            </h2>
-
-            <button
-                on:click={close}
-                class="px-3 py-1 text-xs font-black
-                       bg-red-500 text-white
-                       border-2 border-black
-                       shadow-[2px_2px_0_0_#000]"
-            >
-                CLOSE ✕
-            </button>
-        </div>
-
-        <!-- MEDIA -->
-        <div class="aspect-video bg-black border-4 border-black mb-4 overflow-hidden">
-            {#if game.video}
-                <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                    <source src={game.video} type="video/mp4" />
-                </video>
-            {:else}
-                <img src={game.image} alt={game.title} class="w-full h-full object-cover" />
+        <div class="aspect-video {game.color} border-[3px] border-black flex items-center justify-center relative overflow-hidden bg-slate-100">
+            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#000_2px,transparent_0)] bg-size-[8px_8px]"></div>
+            
+            <span class="text-white font-bold text-3xl drop-shadow-[3px_3px_0_#000] transition-transform duration-500 z-10 
+                         {isHovered ? 'scale-110 rotate-2' : 'scale-100'}">
+                PREVIEW
+            </span>
+            
+            {#if isHovered}
+                <div class="absolute inset-0 bg-[#F9BA72]/90 flex items-center justify-center backdrop-blur-[2px]">
+                    <span class="bg-white border-[3px] border-black px-4 py-2 font-bold shadow-[4px_4px_0_0_#000] -rotate-3 text-black text-sm tracking-widest">
+                        VIEW DETAIL
+                    </span>
+                </div>
             {/if}
         </div>
 
-        <!-- DESC -->
-        <p class="text-sm md:text-base text-slate-700 mb-4">
-            {game.desc}
-        </p>
-
-        <button
-    on:click={() => window.location.href = game.link}
-    class="px-5 py-2 text-sm font-black uppercase
-           bg-emerald-400 border-4 border-black
-           shadow-[4px_4px_0_0_#000]"
->
-    ▶ PLAY GAME
-</button>
-
-
-        <!-- TAGS -->
-        <div class="flex flex-wrap gap-2">
-            {#each game.tags as tag}
-                <span
-                    class="text-xs font-black uppercase
-                           bg-yellow-400 px-2 py-1
-                           border-2 border-black
-                           shadow-[2px_2px_0_0_#000]"
-                >
-                    {tag}
-                </span>
-            {/each}
+        <div class="p-4 bg-white transition-colors border-t-0 {isHovered ? 'bg-slate-50' : ''}">
+            <h2 class="text-2xl font-bold text-slate-900 uppercase mb-3 leading-none group-hover:text-[#41B78E] transition-colors">
+                {game.title}
+            </h2>
+            <div class="flex gap-2 flex-wrap">
+                {#each game.tags as tag}
+                    <span class="bg-white border-2 border-black px-2 py-1 text-[10px] font-bold uppercase shadow-[2px_2px_0_0_#41B78E] text-slate-700">
+                        {tag}
+                    </span>
+                {/each}
+            </div>
         </div>
     </div>
 </div>
+
+{#if isModalOpen}
+    <div 
+        role="button"
+        tabindex="-1" 
+        class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-100 flex items-center justify-center p-4 md:p-6 cursor-default font-pixel"
+        onclick={toggleModal}
+        onkeydown={(e) => e.key === 'Escape' && toggleModal()}
+        transition:fade={{ duration: 150 }}
+    >
+        <div 
+            role="dialog"
+            aria-modal="true"
+            tabindex="0"
+            class="bg-white border-4 border-black w-full max-w-3xl shadow-[12px_12px_0_0_#000] overflow-hidden animate-pop cursor-default outline-none relative"
+            onclick={(e) => e.stopPropagation()}
+            onkeydown={(e) => e.stopPropagation()}
+        >
+            <div class="bg-[#41B78E] border-b-4 border-black p-4 flex justify-between items-center text-white relative">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#000_2px,transparent_0)] bg-size-[6px_6px]"></div>
+                
+                <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide relative z-10 text-shadow-sm">System Info</h2>
+                <button 
+                    onclick={toggleModal} 
+                    class="text-4xl leading-none hover:text-[#F9BA72] font-bold transition-colors focus:outline-none relative z-10 active:scale-90"
+                    aria-label="Close Modal"
+                >
+                    ×
+                </button>
+            </div>
+
+            <div class="p-6 md:p-10 flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-1/2 aspect-square {game.color} border-4 border-black flex items-center justify-center relative shadow-[8px_8px_0_0_#000]">
+                     <span class="text-white font-bold text-8xl drop-shadow-[6px_6px_0_#000] opacity-50">{game.id}</span>
+                </div>
+
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="space-y-2">
+                        <h3 class="text-4xl font-bold uppercase text-slate-900 leading-none">
+                            {game.title}
+                        </h3>
+                        <div class="h-2 w-24 bg-[#F9BA72] border-2 border-black"></div>
+                    </div>
+                    
+                    <div class="flex gap-2 flex-wrap">
+                        {#each game.tags as tag}
+                            <span class="bg-black text-[#F9BA72] border border-black text-xs px-3 py-1 font-bold uppercase tracking-widest">
+                                {tag}
+                            </span>
+                        {/each}
+                    </div>
+
+                    <p class="text-slate-600 text-lg leading-relaxed border-l-[6px] border-[#41B78E] pl-4 py-1">
+                        {game.desc}
+                    </p>
+
+                    <button 
+                        class="w-full py-4 mt-4 bg-[#41B78E] text-white font-bold text-xl uppercase tracking-widest border-[3px] border-black 
+                               shadow-[6px_6px_0_0_#000] 
+                               hover:bg-[#F9BA72] hover:text-black hover:shadow-[3px_3px_0_0_#000] hover:translate-x-0.5 hover:translate-y-0.5
+                               active:translate-x-1 active:translate-y-1 active:shadow-none transition-all outline-none"
+                    >
+                        PLAY NOW
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 {/if}
 
 <style>
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+    /* Menggunakan font Pixelify Sans untuk menyamakan dengan navbar */
+    .font-pixel {
+        font-family: 'Pixelify Sans', sans-serif;
+    }
+
+    .text-shadow-sm {
+        text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    }
+
+    .animate-pop {
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
     }
 </style>

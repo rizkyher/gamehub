@@ -1,131 +1,131 @@
 <script lang="ts">
-    import { fade, slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
+    import { cubicOut } from 'svelte/easing';
 
-    // State Svelte 5
-    let y = $state(0);
-    let isScrolled = $derived(y > 20);
-    let isMobileOpen = $state(false);
+    // --- Svelte 5 State Management ---
+    let scrollY = $state(0);
+    let isMenuOpen = $state(false);
 
-    let navLinks = [
+    // Derived state: Navbar mengecil saat di-scroll
+    let isScrolled = $derived(scrollY > 20);
+
+    // Data Navigasi
+    const navLinks = [
         { name: 'Home', href: '#' },
         { name: 'Games', href: '#games' },
-        { name: 'About', href: '#about' },
-        { name: 'Team', href: '#team' }
+        { name: 'Team', href: '#team' },
+        { name: 'About', href: '#about' }
     ];
 
-    function toggleMobile() {
-        isMobileOpen = !isMobileOpen;
+    function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
     }
 </script>
 
 <svelte:head>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<svelte:window bind:scrollY={y} />
+<svelte:window bind:scrollY={scrollY} />
 
-<nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300 font-pixel px-4 {isScrolled ? 'py-2' : 'py-6'}">
+<nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-out px-4 md:px-6 
+    {isScrolled ? 'py-2' : 'py-4 md:py-6'}">
+    
     <div class="max-w-7xl mx-auto">
-        
-        <div class="relative bg-white border-4 border-black p-2 shadow-[8px_8px_0_0_#0C7779] transition-all duration-300 hover:shadow-[6px_6px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px]">
+        <div class="relative bg-white border-[3px] border-black shadow-[6px_6px_0_0_#000] 
+                    transition-all duration-300 flex flex-col">
             
-            <div class="absolute top-1 left-1 w-2 h-2 bg-black opacity-20"></div>
-            <div class="absolute top-1 right-1 w-2 h-2 bg-black opacity-20"></div>
-            <div class="absolute bottom-1 left-1 w-2 h-2 bg-black opacity-20"></div>
-            <div class="absolute bottom-1 right-1 w-2 h-2 bg-black opacity-20"></div>
-
-            <div class="flex justify-between items-center px-2">
+            <div class="flex justify-between items-center p-3 md:px-6 md:py-4 bg-white z-20 relative">
                 
-                <a
-    href="/"
-    class="logo-container group flex items-center gap-3 relative overflow-hidden p-1"
->
-    <div class="w-12 h-12 border-2 border-black bg-white shadow-[2px_2px_0_0_#000] flex items-center justify-center group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all">
-        <img
-            src="/logo.jpg"
-            alt="KHWARIZMI Studio"
-            class="w-10 h-10 object-contain"
-        />
-    </div>
+                <a href="/" class="flex items-center gap-3 group select-none">
+                    <div class="relative w-10 h-10 border-2 border-black bg-[#F9BA72] 
+                                flex items-center justify-center shadow-[3px_3px_0_0_#000] 
+                                group-hover:bg-[#41B78E] group-hover:translate-x-0.5 group-hover:translate-y-0.5 
+                                group-hover:shadow-none transition-all duration-200">
+                        <div class="grid grid-cols-2 gap-0.5">
+                            <div class="w-1.5 h-1.5 bg-black"></div>
+                            <div class="w-1.5 h-1.5 bg-white"></div>
+                            <div class="w-1.5 h-1.5 bg-white"></div>
+                            <div class="w-1.5 h-1.5 bg-black"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col -gap-1">
+                        <span class="font-bold text-2xl leading-none tracking-tight text-black">PIXEL.</span>
+                        <span class="text-xs font-bold tracking-[0.2em] text-[#F9BA72] group-hover:text-[#41B78E] transition-colors">STUDIO</span>
+                    </div>
+                </a>
 
-    <div class="glitch-layer absolute inset-0 bg-white mix-blend-difference opacity-0 pointer-events-none"></div>
-</a>
-
-
-                <div class="hidden md:flex items-center gap-2">
+                <div class="hidden md:flex items-center gap-8">
                     {#each navLinks as link}
-                        <a 
-                            href={link.href} 
-                            class="relative px-6 py-2 text-xl font-bold uppercase tracking-widest text-slate-600 overflow-hidden group/link hover:text-white transition-colors"
-                        >
-                            <span class="relative z-10">{link.name}</span>
-                            <div class="absolute inset-0 bg-[#0C7779] transform -translate-x-full group-hover/link:translate-x-0 transition-transform duration-300 ease-out"></div>
+                        <a href={link.href} 
+                           class="relative font-semibold text-base uppercase tracking-wider text-slate-700 
+                                  hover:text-[#F9BA72] transition-colors py-1 group">
+                            {link.name}
+                            <span class="absolute bottom-0 left-0 w-full h-0.75 bg-[#41B78E] scale-x-0 
+                                       group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
                         </a>
                     {/each}
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <button class="hidden md:block bg-[#F3E5AB] text-black border-2 border-black px-6 py-2 text-lg font-black uppercase tracking-wide shadow-[4px_4px_0_0_#000] hover:bg-[#0C7779] hover:text-white hover:shadow-[2px_2px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:scale-95 transition-all">
+                    <button class="hidden md:block bg-[#F9BA72] text-white border-2 border-black px-6 py-2 
+                                   font-bold uppercase tracking-wider text-sm shadow-[4px_4px_0_0_#000] 
+                                   hover:bg-[#41B78E] hover:text-white
+                                   hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_#000] 
+                                   active:shadow-none active:translate-x-1 active:translate-y-1 transition-all duration-200">
                         Let's Talk
                     </button>
 
-                    <button 
-                        onclick={toggleMobile}
-                        aria-label="Toggle mobile menu"
-                        class="md:hidden w-10 h-10 bg-black text-white border-2 border-black flex flex-col items-center justify-center gap-1.5 active:scale-90 transition-transform"
-                    >
-                        <div class="w-6 h-0.5 bg-white transition-all {isMobileOpen ? 'rotate-45 translate-y-2' : ''}"></div>
-                        <div class="w-6 h-0.5 bg-white transition-all {isMobileOpen ? 'opacity-0' : ''}"></div>
-                        <div class="w-6 h-0.5 bg-white transition-all {isMobileOpen ? '-rotate-45 -translate-y-2' : ''}"></div>
+                    <button onclick={toggleMenu} aria-label="Toggle Menu"
+                            class="md:hidden w-11 h-11 border-2 border-black bg-[#41B78E] flex flex-col justify-center items-center gap-1.5 
+                                   shadow-[3px_3px_0_0_#000] hover:bg-[#F9BA72]
+                                   active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all duration-200">
+                        <span class="w-6 h-0.75 bg-black transition-transform duration-300 {isMenuOpen ? 'rotate-45 translate-y-2.25' : ''}"></span>
+                        <span class="w-6 h-0.75 bg-black transition-opacity duration-300 {isMenuOpen ? 'opacity-0' : 'opacity-100'}"></span>
+                        <span class="w-6 h-0.75 bg-black transition-transform duration-300 {isMenuOpen ? '-rotate-45 -translate-y-2.25' : ''}"></span>
                     </button>
                 </div>
             </div>
-        </div>
 
-        {#if isMobileOpen}
-            <div 
-                transition:slide={{ duration: 300 }}
-                class="md:hidden mt-2 bg-black border-4 border-[#F3E5AB] p-4 shadow-[8px_8px_0_0_#0C7779]"
-            >
-                <div class="flex flex-col gap-2">
+            {#if isMenuOpen}
+                <div transition:slide={{ duration: 300, easing: cubicOut, axis: 'y' }} 
+                     class="border-t-[3px] border-black bg-slate-50 md:hidden flex flex-col p-4 gap-2 shadow-inner">
+                    
                     {#each navLinks as link}
-                        <a 
-                            href={link.href}
-                            onclick={() => isMobileOpen = false} 
-                            class="block bg-white/10 text-[#F3E5AB] px-4 py-3 text-2xl font-bold uppercase hover:bg-[#0C7779] hover:text-white border-2 border-transparent hover:border-[#F3E5AB] transition-all"
-                        >
-                            > {link.name}
+                        <a href={link.href} onclick={() => isMenuOpen = false}
+                           class="block w-full border-2 border-transparent 
+                                  hover:border-black hover:bg-[#41B78E] hover:text-white
+                                  px-4 py-3 font-semibold uppercase text-base text-slate-700 
+                                  transition-all duration-200 hover:shadow-[3px_3px_0_0_#000]">
+                            {link.name}
                         </a>
                     {/each}
-                    <button class="mt-4 w-full bg-[#F3E5AB] text-black border-2 border-black py-3 text-xl font-black uppercase hover:bg-white transition-colors">
+                    
+                    <div class="h-px bg-slate-300 my-2"></div>
+
+                    <button class="w-full bg-[#F9BA72] text-white border-2 border-black py-3 
+                                   font-bold uppercase tracking-wider text-sm shadow-[3px_3px_0_0_#000] 
+                                   hover:bg-[#41B78E] hover:text-white
+                                   active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-colors duration-200">
                         Contact Us
                     </button>
                 </div>
-            </div>
-        {/if}
+            {/if}
 
+        </div>
     </div>
 </nav>
 
-<div class="h-32"></div>
+<!-- svelte-ignore slot_element_deprecated -->
+<div class="pt-32">
+    <slot />
+</div>
 
 <style>
-    .font-pixel {
-        font-family: 'VT323', monospace;
-    }
-
-    @keyframes glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
-    }   
-
-    /* Target hover secara manual agar Svelte mendeteksi selector ini dan tidak error */
-    .logo-container:hover .glitch-layer {
-        opacity: 0.5;
-        animation: glitch 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    nav {
+        font-family: 'Pixelify Sans', sans-serif;
+        letter-spacing: 0.02em; 
     }
 </style>
