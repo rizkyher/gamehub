@@ -11,58 +11,99 @@
 
     // 2. Data Game
     let myGames = $state([
-        { id: 1, title: "Cyber Drift", desc: "Hindari rintangan di dunia neon masa depan.", tags: ["Action", "Sci-Fi"], color: "bg-purple-200" }, 
-        { id: 2, title: "Spirit Woods", desc: "Petualangan puzzle santai di dalam hutan.", tags: ["Cozy", "Puzzle"], color: "bg-[#41B78E]" }, // Green Theme
-        { id: 3, title: "Sky Castle", desc: "Bangun kerajaanmu di atas awan.", tags: ["Strategy", "Fantasy"], color: "bg-sky-200" },
-        { id: 4, title: "Totoro Run", desc: "Lari secepat mungkin mengejar Bus Kucing.", tags: ["Runner", "Ghibli"], color: "bg-[#F9BA72]" }, // Orange Theme
-        { id: 5, title: "Pixel Chef", desc: "Masak makanan lezat untuk petualang.", tags: ["Simulation"], color: "bg-rose-200" },
-        { id: 6, title: "Star Gazing", desc: "Hubungkan rasi bintang di langit malam.", tags: ["Educational"], color: "bg-indigo-200" }
+        { 
+            id: 1, 
+            title: "Writing Hijaiyah", 
+            desc: "Permainan edukasi interaktif untuk membantu anak-anak belajar menulis huruf hijaiyah dengan cara yang menyenangkan.", 
+            tags: ["Educational", "Kids"], 
+            image: "/writing.jpg",
+            playUrl: "https://gd.games/instant-builds/05d45ddc-a588-4047-93dd-4f4cc0166a83" 
+        },
+        { 
+            id: 2, 
+            title: "Santri Running", // Typo Fixed: Runing -> Running
+            desc: "Petualangan platformer bertema budaya. Hadapi rintangan sambil mengumpulkan ayat-ayat Al-Qur'an.", 
+            tags: ["Runner", "Action"], 
+            image: "/santri.jpg",
+            playUrl: "https://gd.games/ghp-game/santri-running" 
+        }, 
+        { 
+            id: 3, 
+            title: "Flappy Hijaiyah", 
+            desc: "Gameplay klasik Flappy Bird dengan sentuhan edukasi. Hindari rintangan dan kumpulkan huruf yang tepat.", 
+            tags: ["Arcade", "Casual"], 
+            image: "/Flappy.jpg", 
+            playUrl: "#" // Link belum tersedia
+        },
+        { 
+            id: 4, 
+            title: "Salman Alfarisi", 
+            desc: "Kisah heroik sahabat nabi dalam bentuk game petualangan strategi yang mendalam.", 
+            tags: ["Adventure", "History"], 
+            image: "/salman.jpg",
+            playUrl: "https://farrelnashwan33.itch.io/the-seeker-of-light"
+        }, 
+        { 
+            id: 5, 
+            title: "Match 3 Hijaiyah", 
+            desc: "Cocokkan huruf hijaiyah yang sama untuk mendapatkan skor tertinggi.", 
+            tags: ["Puzzle", "Logic"], 
+            image: "/match3.jpeg",
+            playUrl: "https://gd.games/instant-builds/8f743407-34c7-449a-9acc-1bc6ee73463e" 
+        },
+        { 
+            id: 6, 
+            title: "Catching The Hijaiyah", 
+            desc: "Latih ketangkasanmu dengan menangkap huruf yang jatuh dari langit sesuai instruksi.", 
+            tags: ["Educational", "Speed"], 
+            image: "/Catching.jpeg",
+            playUrl: "https://gd.games/instant-builds/159d1ac7-af12-4d0d-b24b-a5263b4d028c" 
+        }
     ]);
 
-    // 3. Data Team (PERBAIKAN: Menggunakan 'photoUrl' bukan 'image')
+    // 3. Data Team
     let myTeam = $state([
         { 
             name: "Bayu", 
             role: "Lead Developer", 
             avatarColor: "bg-[#41B78E]", 
             bio: "Spesialis Svelte & Sihir Kode.", 
-            // Ganti URL ini dengan path lokal Anda (misal: '/bayu.jpg') jika file sudah ada di folder static
-            photoUrl: "bayu.jpeg" 
+            photoUrl: "/bayu.jpeg" 
         },
         { 
             name: "Zaidan", 
             role: "Pixel Artist", 
             avatarColor: "bg-[#F9BA72]", 
             bio: "Melukis dunia dengan kotak.", 
-            photoUrl: "zaidan.jpeg" 
+            photoUrl: "/zaidan.jpeg" 
         },
         { 
             name: "Zain", 
             role: "Game Designer", 
             avatarColor: "bg-slate-300", 
             bio: "Penjaga atmosfer game.", 
-            photoUrl: "zain.jpeg" 
+            photoUrl: "/zain.jpeg" 
         },
         { 
             name: "Arif", 
             role: "Game Designer", 
             avatarColor: "bg-slate-300", 
             bio: "Penjaga atmosfer game.", 
-            photoUrl: "arif.jpeg" 
+            photoUrl: "/arif.jpeg" 
         },
         { 
             name: "Farhan", 
             role: "Game Designer", 
             avatarColor: "bg-slate-300", 
             bio: "Penjaga atmosfer game.", 
-            photoUrl: "farhan.jpeg" 
+            photoUrl: "/farhan.jpeg" 
         },
         { 
             name: "Farrel", 
             role: "Game Designer", 
             avatarColor: "bg-slate-300", 
             bio: "Penjaga atmosfer game.", 
-            photoUrl: "farrel.jpeg" 
+            photoUrl: "/farrel.jpeg" 
         },
     ]);
 </script>
@@ -140,7 +181,6 @@
     :global(body) {
         margin: 0; padding: 0;
         font-family: 'Pixelify Sans', sans-serif;
-        /* Background body netral (Slate-50) agar elemen berwarna lebih pop */
         background-color: #f8fafc; 
         color: #0f172a;
         overflow-x: hidden;
