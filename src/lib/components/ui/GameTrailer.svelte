@@ -1,7 +1,7 @@
 <script lang="ts">
     // Props untuk fleksibilitas
     let { 
-        videoSrc = "vario.mp4", 
+        videoSrc = "videogame.mp4", 
         title = "Unknown Game" 
     } = $props();
 
@@ -46,11 +46,11 @@
                 muted 
                 loop 
                 playsinline
-                class="w-full h-full object-cover opacity-80 group-hover/screen:opacity-100 transition-opacity duration-500"
+                class="w-full h-full object-cover opacity-100 transition-opacity duration-500"
             ></video>
 
             <div class="pointer-events-none absolute inset-0 z-10 
-                        bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] 
+                        bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.05)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] 
                         bg-size-[100%_4px,3px_100%]">
             </div>
 
@@ -116,6 +116,8 @@
 </div>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
+    
     .font-pixel {
         font-family: 'Pixelify Sans', sans-serif;
     }

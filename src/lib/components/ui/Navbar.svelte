@@ -9,16 +9,30 @@
     // Derived state: Navbar mengecil saat di-scroll
     let isScrolled = $derived(scrollY > 20);
 
-    // Data Navigasi
     const navLinks = [
         { name: 'Home', href: '#' },
         { name: 'Games', href: '#games' },
-        { name: 'Team', href: '#team' },
+        { name: 'Team', href: '#team' }, // Link ke section Team
         { name: 'About', href: '#about' }
     ];
 
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
+    }
+
+    // Fungsi untuk smooth scroll saat link diklik
+    function handleScroll(e: MouseEvent, href: string) {
+        e.preventDefault();
+        isMenuOpen = false; // Tutup menu mobile jika terbuka
+        
+        const targetId = href.replace('#', '');
+        const element = document.getElementById(targetId);
+        
+        if (targetId === '') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 </script>
 
@@ -39,7 +53,7 @@
             
             <div class="flex justify-between items-center p-3 md:px-6 md:py-4 bg-white z-20 relative">
                 
-                <a href="/" class="flex items-center gap-3 group select-none">
+                <a href="/" onclick={(e) => handleScroll(e, '#')} class="flex items-center gap-3 group select-none">
                     <div class="relative w-10 h-10 border-2 border-black bg-[#F9BA72] 
                                 flex items-center justify-center shadow-[3px_3px_0_0_#000] 
                                 group-hover:bg-[#41B78E] group-hover:translate-x-0.5 group-hover:translate-y-0.5 
@@ -60,11 +74,12 @@
                 <div class="hidden md:flex items-center gap-8">
                     {#each navLinks as link}
                         <a href={link.href} 
+                           onclick={(e) => handleScroll(e, link.href)}
                            class="relative font-semibold text-base uppercase tracking-wider text-slate-700 
                                   hover:text-[#F9BA72] transition-colors py-1 group">
                             {link.name}
                             <span class="absolute bottom-0 left-0 w-full h-0.75 bg-[#41B78E] scale-x-0 
-                                       group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                                         group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
                         </a>
                     {/each}
                 </div>
@@ -94,7 +109,8 @@
                      class="border-t-[3px] border-black bg-slate-50 md:hidden flex flex-col p-4 gap-2 shadow-inner">
                     
                     {#each navLinks as link}
-                        <a href={link.href} onclick={() => isMenuOpen = false}
+                        <a href={link.href} 
+                           onclick={(e) => handleScroll(e, link.href)}
                            class="block w-full border-2 border-transparent 
                                   hover:border-black hover:bg-[#41B78E] hover:text-white
                                   px-4 py-3 font-semibold uppercase text-base text-slate-700 
@@ -117,11 +133,6 @@
         </div>
     </div>
 </nav>
-
-<!-- svelte-ignore slot_element_deprecated -->
-<div class="pt-32">
-    <slot />
-</div>
 
 <style>
     nav {

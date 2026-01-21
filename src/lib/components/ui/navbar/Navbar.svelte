@@ -1,18 +1,25 @@
 <script lang="ts">
   import { fade, fly } from "svelte/transition";
-  import { Menu, X, Gamepad2, Home, User } from "@lucide/svelte";
+  // 1. Tambahkan 'Users' ke import icon
+  import { Menu, X, Gamepad2, Home, User, Users } from "@lucide/svelte";
 
+  // Props
   let { activeCategory = $bindable() } = $props();
+
+  // State
   let menuOpen = $state(false);
   let scrollY = $state(0);
 
+  // Derived State
   let isScrolled = $derived(scrollY > 20);
 
   // DATA NAVIGASI
+  // 2. Tambahkan 'Team' di sini
   const navLinks = [
     { name: "Home", icon: Home, target: "home" },
     { name: "Games", icon: Gamepad2, target: "games" },
     { name: "About", icon: User, target: "about" },
+    { name: "Team", icon: Users, target: "team" }, // <-- Menu Team Ditambahkanx`
   ];
 
   function selectMenu(name: string, target?: string) {
@@ -45,12 +52,12 @@
         onclick={() => selectMenu("Home", "home")}
         class="group relative flex items-center bg-white border-[3px] border-black p-1 shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
       >
-        <div class="bg-[#F9BA72] p-2 border-2 border-black group-hover:bg-[#41B78E] transition-colors">
-            <div class="grid grid-cols-2 gap-0.5 w-5 h-5">
-                <div class="bg-black"></div><div class="bg-white"></div>
-                <div class="bg-white"></div><div class="bg-black"></div>
-            </div>
-        </div>
+        <img 
+            src="/logo.jpg" 
+            alt="Khwarizmi Logo" 
+            class="w-7 h-7 object-contain block ml-1"
+        />
+
         <div class="px-3 py-1 bg-white">
           <h1 class="text-2xl text-black leading-none uppercase tracking-tighter font-bold">Khwarizmi</h1>
           <p class="text-[10px] text-[#F9BA72] leading-none uppercase tracking-[0.2em] font-bold group-hover:text-[#41B78E] transition-colors">Spirit of Pixel</p>
@@ -63,8 +70,8 @@
             onclick={() => selectMenu(link.name, link.target)}
             class="group relative px-6 py-2 flex items-center gap-2 border-[3px] border-black transition-all duration-200
             {activeCategory === link.name 
-                ? 'bg-[#F9BA72] text-white -translate-y-1 shadow-[4px_4px_0px_0px_#000]' /* Active: Orange */
-                : 'bg-white text-slate-700 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#41B78E] hover:text-[#F9BA72]' /* Hover Shadow: Hijau, Text: Orange */}"
+                ? 'bg-[#F9BA72] text-white -translate-y-1 shadow-[4px_4px_0px_0px_#000]' 
+                : 'bg-white text-slate-700 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#41B78E] hover:text-[#F9BA72]'}"
           >
             <span class="text-sm group-hover:scale-110 transition-transform">
                 <link.icon size={20} />

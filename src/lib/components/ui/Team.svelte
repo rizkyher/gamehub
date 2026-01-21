@@ -130,7 +130,8 @@
                         <div class="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900 border-[3px] border-black overflow-hidden z-10">
                             <div class="relative w-full h-full group/back">
                                 <img 
-                                    src={member.photoUrl || `https://i.pravatar.cc/500?u=${member.name}`} 
+                                    src={member.photoUrl || `${member.name}`} 
+
                                     alt={member.name} 
                                     class="w-full h-full object-cover filter grayscale group-hover/back:grayscale-0 transition-all duration-700"
                                 />
