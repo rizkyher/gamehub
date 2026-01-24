@@ -48,7 +48,7 @@
         },
         { 
             id: 4, 
-            title: "Salman Alfarisi", 
+            title: "Salman Al-farisi", 
             desc: "Ikuti kisah heroik sahabat Nabi, Salman Al-Farisi, dalam game petualangan strategi yang mendalam.", 
             tags: ["Adventure", "History"], 
             image: "/salman.jpg",
@@ -76,58 +76,70 @@
     let myTeam = $state([
         { 
             name: "Bayu", 
-            role: "Lead Developer", 
+            role: "Developer Game", 
             avatarColor: "bg-[#41B78E]", 
-            bio: "Spesialis Svelte & Sihir Kode.", 
+            bio: "WRITING HIJAIYAH.", 
             photoUrl: "/bayu.jpg" 
         },
         { 
             name: "Zaidan", 
-            role: "Pixel Artist", 
+            role: "Developer Game", 
             avatarColor: "bg-[#F9BA72]", 
-            bio: "Melukis dunia dengan kotak.", 
+            bio: "SANTRI BROS.", 
             photoUrl: "/zaidan.jpg" 
         },
         { 
             name: "Zain", 
-            role: "Game Designer", 
+            role: "Developer Game", 
             avatarColor: "bg-slate-300", 
-            bio: "Penjaga atmosfer game.", 
+            bio: "WRITING HIJAIYAH.", 
             photoUrl: "/zain.jpg" 
         },
         { 
             name: "Arif", 
-            role: "Game Designer", 
+            role: "Developer Game", 
             avatarColor: "bg-slate-300", 
-            bio: "Penjaga atmosfer game.", 
+            bio: "VISULA NOVE SALMAN AL-FARISI.", 
             photoUrl: "/arif.jpg" 
         },
         { 
             name: "Farhan", 
-            role: "Game Designer", 
+            role: "Developer Game", 
             avatarColor: "bg-slate-300", 
-            bio: "Penjaga atmosfer game.", 
+            bio: "SANTRI BROS.", 
             photoUrl: "/farhan.jpg" 
         },
         { 
             name: "Farrel", 
-            role: "Game Designer", 
+            role: "Developer Game", 
             avatarColor: "bg-slate-300", 
-            bio: "Penjaga atmosfer game.", 
+            bio: "VISULA NOVE SALMAN AL-FARISI.", 
             photoUrl: "/farrel.jpg" 
+        },
+        { 
+            name: "Aab", 
+            role: "Developer Game", 
+            avatarColor: "bg-slate-300", 
+            bio: "DUPALO.", 
+            photoUrl: "/aab.jpg" 
         },
     ]);
 </script>
 
 <svelte:head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
-    <title>Khwarizmi Game Studio</title>
+
+    <title>Khwarizmi Game Hub</title>
+    <link rel="icon" href="/logo.jpg"> 
 </svelte:head>
 
 {#if isLoading}
     <div 
         out:fly={{ y: -1000, duration: 1200, easing: cubicIn }} 
-        class="fixed inset-0 z-[9999]"
+        class="fixed inset-0 z-9999"
     >
         <LoadingsScreen onComplete={handleLoadingComplete} />
     </div>
@@ -145,13 +157,13 @@
                 <section id="home">
                     <Header 
                         title="K H W A R I Z M I" 
-                        subtitle="Koleksi petualangan kecil dalam balutan pixel art dan estetika Ghibli." 
+                        subtitle="Khawrizmi Game Hub adalah kumpulan game interaktif Islami untuk membantu anak belajar huruf Hijaiyah, Al-Qur'an, dan mengenal Sahabat Rasulullah SAW dengan lebih menyenangkan." 
                     />
                 </section>
 
                 <section class="mt-12 mb-24 flex justify-center">
                     <GameTrailer 
-                        videoSrc="videogame.mp4" 
+                        videoSrc="Videogame.mp4" 
                         title="Project: Horizon 2026" 
                     />
                 </section>

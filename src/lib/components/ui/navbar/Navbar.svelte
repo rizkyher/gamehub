@@ -60,7 +60,7 @@
 
         <div class="px-3 py-1 bg-white">
           <h1 class="text-2xl text-black leading-none uppercase tracking-tighter font-bold">Khwarizmi</h1>
-          <p class="text-[10px] text-[#F9BA72] leading-none uppercase tracking-[0.2em] font-bold group-hover:text-[#41B78E] transition-colors">Spirit of Pixel</p>
+          <p class="text-[10px] text-[#F9BA72] leading-none uppercase tracking-[0.2em] font-bold group-hover:text-[#41B78E] transition-colors">GAME HUB</p>
         </div>
       </button>
 

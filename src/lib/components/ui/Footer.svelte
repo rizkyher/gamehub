@@ -74,8 +74,8 @@
                 <h2 class="text-3xl font-bold uppercase tracking-widest leading-none text-white flex items-center gap-4 relative z-10">
                   <span class="text-4xl filter drop-shadow-md group-hover:animate-spin-pixel">🍄</span>
                   
-                  <span class="relative inline-block group-hover:animate-glitch" data-text="Pixel Realm">
-                    Pixel Realm
+                  <span class="relative inline-block group-hover:animate-glitch" data-text="Khwarizmi">
+                    Khawrizmi
                   </span>
                 </h2>
 
