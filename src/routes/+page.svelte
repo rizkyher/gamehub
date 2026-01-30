@@ -28,7 +28,7 @@
             desc: "Belajar menulis huruf hijaiyah dengan cara yang menyenangkan dan interaktif untuk anak-anak.", 
             tags: ["Educational", "Kids"], 
             image: "/writing.jpg",
-            playUrl: "https://gd.games/instant-builds/05d45ddc-a588-4047-93dd-4f4cc0166a83" 
+            playUrl: "https://gd.games/instant-builds/41e5f344-d10c-496c-9538-70928971dff8" 
         },
         { 
             id: 2, 
@@ -44,7 +44,7 @@
             desc: "Terbang melewati rintangan sambil mengumpulkan huruf hijaiyah yang benar. Melatih fokus dan ingatan.", 
             tags: ["Arcade", "Casual"], 
             image: "/Flappy.jpg", 
-            playUrl: "#" 
+            playUrl: "https://gd.games/instant-builds/9ab745ac-3112-4c67-bd19-ad9b12d3c14c" 
         },
         { 
             id: 4, 
